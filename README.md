@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # React + TypeScript + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
@@ -67,3 +68,7 @@ export default tseslint.config([
   },
 ])
 ```
+=======
+# Todo-App
+this is a mern stack project with react js node js express js and mongodb
+>>>>>>> b5bd7c2f315abe22b93ba240437a1eaec4df7b53
