@@ -7,7 +7,8 @@ import {
   Paper,
 } from "@mui/material";
 import { Link, useNavigate } from "react-router-dom";
-import { useState, FormEvent } from "react";
+import { useState } from "react";
+import type { FormEvent } from "react";
 import { useEffect } from "react";
 
 const Signup = () => {
@@ -25,12 +26,11 @@ const Signup = () => {
   useEffect(() => {
     if (localStorage.getItem("login")) {
       navigate("/");
-      // Add your logic here
     }
-  }, []);
+  }, [navigate]); // Added navigate to dependency array
 
-  const handleSignup = async (e: FormEvent) => {
-    e.preventDefault(); // Prevent form submission refresh
+  const handleSignup = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
     console.log(signupData);
 
     try {
@@ -87,6 +87,7 @@ const Signup = () => {
             margin="normal"
             label="Name"
             name="name"
+            value={signupData.name} // Added value binding
             onChange={(event) =>
               setSignupData({ ...signupData, name: event.target.value })
             }
@@ -94,7 +95,7 @@ const Signup = () => {
             sx={{
               "& .MuiOutlinedInput-root": {
                 "&.Mui-focused fieldset": {
-                  borderColor: "#3f1910ff", // Change to your desired color
+                  borderColor: "#3f1910ff",
                 },
               },
             }}
@@ -105,6 +106,7 @@ const Signup = () => {
             label="Email"
             type="email"
             name="email"
+            value={signupData.email} // Added value binding
             onChange={(event) =>
               setSignupData({ ...signupData, email: event.target.value })
             }
@@ -112,7 +114,7 @@ const Signup = () => {
             sx={{
               "& .MuiOutlinedInput-root": {
                 "&.Mui-focused fieldset": {
-                  borderColor: "#3f1910ff", // Change to your desired color
+                  borderColor: "#3f1910ff",
                 },
               },
             }}
@@ -123,6 +125,7 @@ const Signup = () => {
             label="Password"
             type="password"
             name="password"
+            value={signupData.password} // Added value binding
             onChange={(event) =>
               setSignupData({ ...signupData, password: event.target.value })
             }
@@ -130,7 +133,7 @@ const Signup = () => {
             sx={{
               "& .MuiOutlinedInput-root": {
                 "&.Mui-focused fieldset": {
-                  borderColor: "#3f1910ff", // Change to your desired color
+                  borderColor: "#3f1910ff",
                 },
               },
             }}
@@ -143,8 +146,16 @@ const Signup = () => {
           >
             Sign Up
           </Button>
-          <Link to="/login" style={{ color: "red" }}>
-            Login
+          <Link
+            to="/login"
+            style={{
+              color: "red",
+              display: "block",
+              textAlign: "center",
+              marginTop: "16px",
+            }}
+          >
+            Already have an account? Login
           </Link>
         </Box>
       </Paper>

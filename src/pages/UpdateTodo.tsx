@@ -142,6 +142,7 @@ const UpdateTodo = () => {
                 placeholder="Add task title"
                 required
                 size={isMobile ? "small" : "medium"}
+                rows={isMobile ? 3 : isTablet ? 4 : 5}
                 sx={{
                   "& .MuiOutlinedInput-root": {
                     "&.Mui-focused fieldset": {

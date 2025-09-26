@@ -90,6 +90,7 @@ const TodoTask = () => {
                 label="Title"
                 variant="outlined"
                 placeholder="Add task title"
+                rows={isMobile ? 3 : isTablet ? 4 : 5}
                 required
                 size={isMobile ? "small" : "medium"}
                 sx={{
