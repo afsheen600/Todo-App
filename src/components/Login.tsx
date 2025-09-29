@@ -9,6 +9,7 @@ import {
 import { Link, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import type { FormEvent } from "react";
+import { baseURL } from "../constants";
 
 const Login = () => {
   const [loginData, setLoginData] = useState<{
@@ -32,7 +33,7 @@ const Login = () => {
     console.log(loginData);
 
     try {
-      const response = await fetch("http://localhost:3000/login", {
+      const response = await fetch(`${baseURL}login`, {
         method: "POST",
         body: JSON.stringify(loginData),
         headers: {
