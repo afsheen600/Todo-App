@@ -49,8 +49,8 @@ const Login = () => {
       const result = await response.json();
       if (result.success) {
         console.log(result);
-        document.cookie = "token=" + result.token;
 
+        localStorage.setItem("token", result.token);
         localStorage.setItem("login", loginData.email);
         localStorage.setItem("isLoggedIn", "true");
         window.dispatchEvent(new Event("authChange"));
