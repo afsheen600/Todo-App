@@ -12,6 +12,7 @@ import {
   useMediaQuery,
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import { apiClient } from "../Api/apiClients";
 
 const TodoTask = () => {
   const [taskData, setTaskData] = useState<{
@@ -27,22 +28,20 @@ const TodoTask = () => {
   const isTablet = useMediaQuery(theme.breakpoints.down("md"));
 
   const handleAddTask = async () => {
-    const result = await fetch("http://localhost:3000/add-task", {
-      method: "post",
-      body: JSON.stringify(taskData),
-      credentials: "include",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    if (result.ok) {
-      console.log("Task added successfully:", result);
-      navigate("/");
-    } else {
-      console.error("Failed to add task:", result.status);
-    }
+    try {
+      const responseData = await apiClient(`/add-task`, {
+        method: "POST",
+        body: JSON.stringify({
+          Title: taskData.Title,
+          Description: taskData.Description,
+        }),
+      });
 
-    setTaskData({ Title: "", Description: "" });
+      console.log("Task added successfully:", responseData);
+      navigate("/"); // go back to task list
+    } catch (error) {
+      console.error("Error adding task:", error);
+    }
   };
 
   return (

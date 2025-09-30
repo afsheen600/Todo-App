@@ -16,7 +16,7 @@ export const apiClient = async (
       ...defaultHeaders,
       ...options.headers,
     },
-    credentials: "include", // 🔑 important for cookies/sessions
+    // credentials: "include", // 🔑 important for cookies/sessions
   });
 
   if (!response.ok) {

@@ -13,6 +13,7 @@ import {
   CircularProgress,
 } from "@mui/material";
 import { useNavigate, useParams } from "react-router-dom";
+import { apiClient } from "../Api/apiClients";
 
 const UpdateTodo = () => {
   const [taskData, setTaskData] = useState<{
@@ -39,13 +40,7 @@ const UpdateTodo = () => {
 
   const getTask = async (id: string) => {
     try {
-      const response = await fetch(`http://localhost:3000/task/${id}`, {
-        credentials: "include",
-      });
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-      const res = await response.json();
+      const res = await apiClient(`/task/${id}`);
       setTaskData(res.result);
       setLoading(false);
     } catch (error) {
@@ -56,27 +51,15 @@ const UpdateTodo = () => {
 
   const handleUpdateTask = async () => {
     try {
-      // Include the ID in the URL and make sure to send the correct data
-      const result = await fetch(`http://localhost:3000/update-task/${id}`, {
-        method: "PUT", // Changed to uppercase
-        credentials: "include",
-        headers: {
-          "Content-Type": "application/json",
-        },
+      const responseData = await apiClient(`/update-task/${id}`, {
+        method: "PUT",
         body: JSON.stringify({
           Title: taskData.Title,
           Description: taskData.Description,
         }),
       });
-
-      if (result.ok) {
-        const responseData = await result.json();
-        console.log("Task updated successfully:", responseData);
-        navigate("/");
-      } else {
-        console.error("Failed to update task:", result.status);
-        // Optional: Show error message to user
-      }
+      console.log("Task updated successfully:", responseData);
+      navigate("/");
     } catch (error) {
       console.error("Error updating task:", error);
     }
