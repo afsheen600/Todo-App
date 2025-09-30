@@ -33,7 +33,7 @@ const Login = () => {
     console.log(loginData);
 
     try {
-      const response = await fetch(`${baseURL}login`, {
+      const response = await fetch(`${baseURL}/login`, {
         method: "POST",
         body: JSON.stringify(loginData),
         headers: {
