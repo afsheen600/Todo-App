@@ -10,6 +10,8 @@ export const apiClient = async (
     Authorization: `Bearer ${localStorage.getItem("token") ?? ""}`,
   };
 
+  console.log("Saved token:", localStorage.getItem("token"));
+
   const response = await fetch(`${baseUrl}${endpoint}`, {
     ...options,
     headers: {

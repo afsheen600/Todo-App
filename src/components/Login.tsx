@@ -51,6 +51,7 @@ const Login = () => {
         console.log(result);
 
         localStorage.setItem("token", result.token);
+        console.log("Login result:", result);
         localStorage.setItem("login", loginData.email);
         localStorage.setItem("isLoggedIn", "true");
         window.dispatchEvent(new Event("authChange"));
