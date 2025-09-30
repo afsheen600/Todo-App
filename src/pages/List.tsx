@@ -17,6 +17,7 @@ import {
 } from "@mui/material";
 import { Edit, Delete } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
+import { apiClient } from "../Api/apiClients";
 
 interface Task {
   _id: string;
@@ -41,41 +42,30 @@ const List = () => {
   const fetchTasks = async () => {
     try {
       setLoading(true);
-      const response = await fetch("http://localhost:3000/tasks", {
-        credentials: "include",
-      });
-
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-
-      const data = await response.json();
+      const data = await apiClient("/tasks"); // 👈 using apiClient
       setTasksData(data.result || []);
       setError(null);
-      console.log("Fetched data:", data);
     } catch (error) {
       const errorMessage =
         error instanceof Error ? error.message : "Failed to fetch tasks";
       setError(errorMessage);
-      console.error("Fetch error:", error);
     } finally {
       setLoading(false);
     }
   };
 
   const deletTask = async (id: string) => {
-    const response = await fetch("http://localhost:3000/delete/" + id, {
-      method: "DELETE",
-      credentials: "include",
-    });
-    const data = await response.json();
-    if (data.success) {
-      console.log("Task deleted successfully:", data);
-    } else {
-      console.error("Failed to delete task:", data.message);
+    try {
+      const data = await apiClient(`/delete/${id}`, { method: "DELETE" });
+      if (data.success) {
+        console.log("Task deleted successfully:", data);
+      } else {
+        console.error("Failed to delete task:", data.message);
+      }
+      fetchTasks();
+    } catch (error) {
+      console.error("Delete error:", error);
     }
-
-    fetchTasks();
   };
 
   // Mobile view for tasks
