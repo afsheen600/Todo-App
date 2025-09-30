@@ -39,7 +39,7 @@ function App() {
         <Route path="/updateTodo/:id" element={<UpdateTodo />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/login" element={<Login />} />
-        <Route path="**" element={<NotFound />} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </Box>
   );
